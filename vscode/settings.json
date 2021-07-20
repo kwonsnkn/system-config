@@ -1,4 +1,4 @@
-// Workspace settings.json
+//this file has been tested on malone
 //1. Copy this file to /home/<your_username>/.config/Code/User
 //2. edit the path to point to your dist folder i.e. /os/dist/alac/bryan.obj/dist/include
 //3. edit '/opt/roku/x86_64/20210330/include/c++/10.2.0' to point to your GCC10 directory
@@ -100,15 +100,16 @@
         //"os/dist/all/Linux86Unity_dev.OBJ/include": false,
         //"os/dist/all/Linux86Unity_dev.OBJ/usr/include": false,
         "os/RokuOS/**": false,
-        "port/**/dist": true,
         "port/**/build-carbon": true,
         "port/bcmarm/**": true,
         "port/bcmmips/**": true,
         //mediatek
         "port/mediatek/**": true,
+        "port/mediatek/**/dist": true,
         "port/mediatek/r819/**": true,
         //mstar
         "port/mstar/**": true,
+        "port/mstar/**/dist": true,
         "port/mstar/amarillo1080":      true,
         "port/mstar/amarillo1080_mvpd": true,
         "port/mstar/amarillo10804k":    true,
@@ -131,6 +132,7 @@
         "port/mstar/smiley": true,
         //mtk
         "port/mtk/**": true,
+        "port/mtk/**/dist": true,
         "port/mtk/athens": true,
         "port/mtk/athens_dvd": true,
         "port/mtk/aurora_r816": true,
@@ -138,6 +140,7 @@
         "port/mtk/miami_dvb": true,
         //realtek
         "port/realtek/**": false,
+        "port/realtek/**/dist": false,
         "port/realtek/bandera": true,
         "port/realtek/benjamin": true,
         "port/realtek/hank": true,
@@ -165,5 +168,6 @@
     "workbench.editorAssociations": {
         "*.webp": "imagePreview.previewEditor"
     },
-    "git.enableSmartCommit": true
+    "git.enableSmartCommit": true,
+    "perforce.activationMode": "always"
 }
