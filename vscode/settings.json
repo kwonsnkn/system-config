@@ -96,18 +96,22 @@
         "**/.hg": true,
         "**/.svn": true,
         "**/CVS": true,
+        // ---> os
         "os/dist/**": true,
         //"os/dist/all/Linux86Unity_dev.OBJ/include": false,
         //"os/dist/all/Linux86Unity_dev.OBJ/usr/include": false,
         "os/RokuOS/**": false,
+	// --> port
         "port/**/build-carbon": true,
+        // ---> port/bcmarm
         "port/bcmarm/**": true,
+        // ---> port/bcmmips
         "port/bcmmips/**": true,
-        //mediatek
+        // ---> port/mediatek
         "port/mediatek/**": true,
         "port/mediatek/**/dist": true,
         "port/mediatek/r819/**": true,
-        //mstar
+        // ---> port/mstar
         "port/mstar/**": true,
         "port/mstar/**/dist": true,
         "port/mstar/amarillo1080":      true,
@@ -130,7 +134,7 @@
         "port/mstar/midland": true,
         "port/mstar/rollingwood": true,
         "port/mstar/smiley": true,
-        //mtk
+        // ---> port/mtk
         "port/mtk/**": true,
         "port/mtk/**/dist": true,
         "port/mtk/athens": true,
@@ -138,7 +142,7 @@
         "port/mtk/aurora_r816": true,
         "port/mtk/miami": true,
         "port/mtk/miami_dvb": true,
-        //realtek
+        // ---> port/realtek
         "port/realtek/**": false,
         "port/realtek/**/dist": false,
         "port/realtek/bandera": true,
@@ -148,9 +152,9 @@
         "port/realtek/reno": false,
         "port/realtek/roma": true,
         "port/realtek/rtd282x": true,
-        //sigma
+        // ---> port/sigma
         "port/sigma/**": true,
-        //x86
+        // ---> port/x86
         "port/x86_64/**": true
     },
     "files.watcherExclude": {
