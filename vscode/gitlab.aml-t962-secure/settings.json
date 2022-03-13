@@ -23,6 +23,7 @@
         "**/.svn": true,
         "**/.log": true,
         "**/CVS": true,
+        "secure_boot_dev/toolchain/**": true
     },
     "files.watcherExclude": {
         "**/**": true,
@@ -34,6 +35,7 @@
         "**/.svn": true,
         "**/.log": true,
         "**/CVS": true,
+        "secure_boot_dev/toolchain/**": true
     },
     "workbench.startupEditor": "newUntitledFile",
     "files.associations": {
