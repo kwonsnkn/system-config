@@ -1,0 +1,101 @@
+//this file has been tested on malone
+//1. Copy this file to /home/<your_username>/.config/Code/User
+//2. edit the path to point to your dist folder i.e. /os/dist/alac/bryan.obj/dist/include
+//3. edit '/opt/roku/x86_64/20210330/include/c++/10.2.0' to point to your GCC10 directory
+//4. edit "files.exclude" section
+
+{
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.default.cppStandard": "gnu++20",
+//    "javascript.validate.enable": false,
+//    "typescript.format.enable": false,
+//    "typescript.validate.enable": false,
+    "C_Cpp.default.defines": [
+        "BUILD_NO_NRD"
+    ],
+    "C_Cpp.default.includePath": [
+        "${default}"
+    ],
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": false,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.log": true,
+        "**/CVS": true,
+        // Platforms
+        "alpine/**": true,
+        "athens/**": true,
+        "bandera/**": true,
+        "benjamin/**": true,
+        "brillbert/**": true,
+        "camden_vestel/**": true,
+        "cooper/**": true,
+        "elpaso2k/**": true,
+        "elpaso2k-mfg/**": true,
+        "fargo_evt1/**": true,
+        "lagrange/**": true,
+        "liberty_chh/**": true,
+        "littlefield/**": true,
+        "longview/**": true,
+        "malone/**": true,
+        "miami/**": true,
+        "midland/**": true,
+        "reno/**": true,
+        "rollingwood/**": true,
+        "roma/**": true,
+        "roxton/**": false,
+        "trinidad/**": true
+    },
+    "files.watcherExclude": {
+        "**/**": true,
+    },
+    "search.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": false,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.log": true,
+        "**/CVS": true,
+        // Platforms
+        "alpine/**": true,
+        "athens/**": true,
+        "bandera/**": true,
+        "benjamin/**": true,
+        "brillbert/**": true,
+        "camden_vestel/**": true,
+        "cooper/**": true,
+        "elpaso2k/**": true,
+        "elpaso2k-mfg/**": true,
+        "fargo_evt1/**": true,
+        "lagrange/**": true,
+        "liberty_chh/**": true,
+        "littlefield/**": true,
+        "longview/**": true,
+        "malone/**": true,
+        "miami/**": true,
+        "midland/**": true,
+        "reno/**": true,
+        "rollingwood/**": true,
+        "roma/**": true,
+        "roxton/**": false,
+        "trinidad/**": true
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "files.associations": {
+        "*.ts": "xml",
+        "*.expect": "bat",
+        ".bash_functions": "shellscript"
+    },
+    "C_Cpp.intelliSenseCacheSize": 60000,
+    "C_Cpp.intelliSenseMemoryLimit": 15000,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.editorAssociations": {
+        "*.webp": "imagePreview.previewEditor"
+    },
+    "git.enableSmartCommit": true,
+    "perforce.activationMode": "always",
+    "cmake.configureOnOpen": false
+}

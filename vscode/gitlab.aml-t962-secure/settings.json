@@ -1,0 +1,52 @@
+//this file has been tested on malone
+//1. Copy this file to /home/<your_username>/.config/Code/User
+//2. edit the path to point to your dist folder i.e. /os/dist/alac/bryan.obj/dist/include
+//3. edit '/opt/roku/x86_64/20210330/include/c++/10.2.0' to point to your GCC10 directory
+//4. edit "files.exclude" section
+
+{
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.default.cppStandard": "gnu++20",
+    "C_Cpp.default.defines": [
+        "BUILD_NO_NRD"
+    ],
+    "C_Cpp.default.includePath": [
+        "/opt/roku/x86_64/20210330/include/c++/10.2.0",
+        "${default}"
+    ],
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.log": true,
+        "**/CVS": true,
+    },
+    "files.watcherExclude": {
+        "**/**": true,
+    },
+    "search.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.log": true,
+        "**/CVS": true,
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "files.associations": {
+        "*.ts": "xml",
+        "*.expect": "bat",
+        ".bash_functions": "shellscript"
+    },
+    "C_Cpp.intelliSenseCacheSize": 60000,
+    "C_Cpp.intelliSenseMemoryLimit": 15000,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.editorAssociations": {
+        "*.webp": "imagePreview.previewEditor"
+    },
+    "git.enableSmartCommit": true,
+    "perforce.activationMode": "always"
+}

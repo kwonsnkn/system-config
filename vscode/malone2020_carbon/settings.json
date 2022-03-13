@@ -1,0 +1,272 @@
+//this file has been tested on malone
+//1. Copy this file to /home/<your_username>/.config/Code/User
+//2. edit the path to point to your dist folder i.e. /os/dist/alac/bryan.obj/dist/include
+//3. edit '/opt/roku/x86_64/20210330/include/c++/10.2.0' to point to your GCC10 directory
+//4. edit "files.exclude" section
+
+{
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "C_Cpp.default.intelliSenseMode": "gcc-x64",
+    "C_Cpp.default.cppStandard": "gnu++20",
+//    "javascript.validate.enable": false,
+//    "typescript.format.enable": false,
+//    "typescript.validate.enable": false,
+    "C_Cpp.default.defines": [
+        "BUILD_NO_NRD"
+    ],
+    "C_Cpp.default.includePath": [
+        "${workspaceRoot}/os/3rdParty/R2D2/include",
+        "${workspaceRoot}/os/3rdParty/R2D2/src/include",
+        "${workspaceRoot}/os/3rdParty/unity-rpc/include",
+        "${workspaceRoot}/os/3rdParty/brightscript/BrightScript/Include",
+        "${workspaceRoot}/os/3rdParty/brightscript/UnitTest/lib",
+        "${workspaceRoot}/os/addon/apps/unity/native",
+        "${workspaceRoot}/os/dist/rpctest/Carbon14_dev.OBJ/build",
+        "${workspaceRoot}/os/dist/alac/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/alsa/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/bitsery/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/boost/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/brotli/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/c-ares/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/cppzmq/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/curl/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/distdb/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/expat/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/ffmpeg/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/flac/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/flatbuffers/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/flite/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/freeimage/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/freetype/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/freetype/Carbon14_dev.OBJ/dist/usr/include/freetype2",
+        "${workspaceRoot}/os/dist/frozen/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/fuse3/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/fuse/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/jsoncpp/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libexif/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libiptcdata/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libjpeg-turbo/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libjpeg-turbo/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/libopus/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libpcap/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libpng/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/libwebp/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/libzip/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/libzmq/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/lvm/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/mpg123/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/nghttp2/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/nng/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/nngpp/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/ogg/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/openssl/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/opusfile/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/pcre/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/procps-ng/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/qrcode/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/qt/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/qt/Carbon14_dev.OBJ/dist/include/QtCore",
+        "${workspaceRoot}/os/dist/qt/Carbon14_dev.OBJ/dist/include/QtGui",
+        "${workspaceRoot}/os/dist/ralsa/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/roku_thrift/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/rtlog/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/sysroot/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/taglib/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/thrift/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/vorbis/Carbon14_dev.OBJ/dist/include",
+        "${workspaceRoot}/os/dist/zlib/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/dist/zstd/Carbon14_dev.OBJ/dist/usr/include",
+        "${workspaceRoot}/os/RokuOS/Aux/Include",
+        "${workspaceRoot}/os/RokuOS/Device/Include",
+        "${workspaceRoot}/os/RokuOS/System/Include",
+        "${workspaceRoot}/os/RokuOS/UI/Include",
+        "${workspaceRoot}/os/RokuOS/UI/Source/Unity",
+        "${workspaceRoot}/os/RokuOS/System/Source/MediaPlayer/Include",
+        "${workspaceRoot}/os/RokuOS/System/Source/MediaPlayer",
+        "${workspaceRoot}/os/RokuOS/System/Source",
+        "${workspaceRoot}/os/RokuOS/UI/Source/Scripting/Components/Include",
+        "${workspaceRoot}/port/internal/R2D2/src",
+        "/opt/roku/x86_64/20210330/include/c++/10.2.0",
+        "${default}"
+    ],
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": false,
+        "**/.hg": true,
+        "**/.svn": true,
+        "os/**/.log": true,
+        "**/CVS": true,
+        "os/3rdParty": true,
+        "os/addon": true,
+        "os/apps/[^mr]*": true,         // exclude all except m* or r*
+        "os/apps/m[^f]*": true,         // exclude all except mf*
+        "os/apps/mfg_[^a]*": true,      // exclude all except mfg_app_k*
+        "os/apps/mfg_app_[^k]*": true,  // exclude all except mfg_app_k*
+        "os/apps/roku_[^m]*": true,        
+        "os/components/**": true,
+        "os/dist/**": true,
+        "os/docs": true,
+        "os/ndk": true,
+        "os/porting_kit": true,
+        "os/src": true,
+        "os/oe": true,
+        "os/RokuOS/**": false,              // RokuOS
+        "os/RokuOS/Tools/**": true,
+        "os/RokuOS/ToolsLib/**": true,
+        "os/scripts/[^b]*": true,
+        "os/scripts/build-metrics/**": true,
+        "port/**/build-carbon": true,
+        //Amlogic
+        "port/amlogic/**": true,           // true/false
+        "port/amlogic/**/dist": true,
+        "port/amlogic/t9xx/platform/br/toolchain/**": true,
+        "port/amlogic/t9xx/platform/t318/**": true,
+        "port/amlogic/t9xx/platform/t318-dvb/**": true,
+        "port/amlogic/t9xx/platform/t962e2-ref/**": true,
+        //bcmarm
+        "port/bcmarm/**": true,
+        //bcmmips
+        "port/bcmmips/**": true,
+        //generic
+        "port/generic/**": true,
+        //mediatek
+        "port/mediatek/**": true,
+        "port/mediatek/**/dist": true,
+        "port/mediatek/r819/**": true,
+        //mstar
+        "port/mstar/**": false,
+        "port/mstar/**/dist": true,
+        "port/mstar/amarillo1080":      true,
+        "port/mstar/amarillo1080_mvpd": true,
+        "port/mstar/amarillo10804k":    true,
+        "port/mstar/amarillo4k":    true,
+        "port/mstar/bryan": true,
+        "port/mstar/camden": true,
+        "port/mstar/cooper": true,
+        "port/mstar/cooper_mvpd": true,
+        "port/mstar/elpaso2k": true,
+        "port/mstar/fruitlan4k": true,
+        "port/mstar/fruitland4k": true,
+        "port/mstar/galveston": true,
+        "port/mstar/gilbert": true,
+        "port/mstar/gilbert_mvpd": true,
+        "port/mstar/gilbert4k": true,
+        "port/mstar/glaze": true,
+        "port/mstar/littlefield": true,
+        "port/mstar/longview": true,
+        "port/mstar/malone": false,
+        "port/mstar/midland": true,
+        "port/mstar/rollingwood": true,
+        "port/mstar/smiley": true,
+        //mtk
+        "port/mtk/**": true,
+        "port/mtk/**/dist": true,
+        "port/mtk/athens": true,
+        "port/mtk/athens_dvb": true,
+        "port/mtk/aurora_r816": true,
+        "port/mtk/miami": true,
+        "port/mtk/miami_dvb": true,
+        //realtek
+        "port/realtek/**": true,            // true/false
+        "port/realtek/**/dist": true,
+        "port/realtek/bandera": true,
+        "port/realtek/benjamin": true,
+        "port/realtek/groot": true,
+        "port/realtek/hank": true,
+        "port/realtek/nemo": true,
+        "port/realtek/reno": true,
+        "port/realtek/roma": true,
+        "port/realtek/rtd1395": true,
+        "port/realtek/rtd2821": true,       // true/false
+        "port/realtek/rtd282x": true,
+        "port/realtek/rtd2873-2893": true,
+        "port/realtek/rtd2873": true,       // true/false
+        "port/realtek/stark": true,
+        //sigma
+        "port/sigma/**": true,
+        //x86
+        "port/x86_64/**": true
+    },
+    "files.watcherExclude": {
+        "**/**": true,
+    },
+    "search.exclude": {
+        "os/dist/**": true,
+        "os/apps/dist/**": true,
+        "**/dist/build/**": true,
+        //amlogic
+        "port/amlogic/**": true,       // true/false
+        //bcmarm
+        "port/bcmarm/**": true,
+        //bcmmips
+        "port/bcmmips/**": true,
+        //generic
+        "port/generic/**": true,
+        "port/internal/**": true,
+        //mediatek
+        "port/mediatek/**": true,
+        "port/mediatek/r81x/**": true,    // true/false
+        "port/mediatek/r819/**": true,    // true/false
+        //mstar
+        "port/mstar/**": false,
+        "port/mstar/amarillo1080":      true,
+        "port/mstar/amarillo1080_mvpd": true,
+        "port/mstar/amarillo10804k":    true,
+        "port/mstar/amarillo4k":    true,
+        "port/mstar/bryan": true,
+        "port/mstar/camden": true,
+        "port/mstar/cooper": true,
+        "port/mstar/cooper_mvpd": true,
+        "port/mstar/elpaso2k": true,
+        "port/mstar/fruitland4k": true,
+        "port/mstar/galveston": true,
+        "port/mstar/gilbert": true,
+        "port/mstar/gilbert_mvpd": true,
+        "port/mstar/gilbert4k": true,
+        "port/mstar/glaze": true,
+        "port/mstar/littlefield": true,
+        "port/mstar/longview": true,
+        "port/mstar/malone": false,
+        "port/mstar/midland": true,    // true/false
+        "port/mstar/rollingwood": true,
+        "port/mstar/smiley": true,
+        //mtk
+        "port/mtk/**": true,
+        "port/mtk/**/dist": true,
+        "port/mtk/athens": true,    // true/false
+        "port/mtk/athens_dvb": true,
+        "port/mtk/aurora_r816": true,
+        "port/mtk/miami": true,
+        "port/mtk/miami_dvb": true,
+        //realtek
+        "port/realtek/**": true, 
+        "port/realtek/groot/**": true,
+        "port/realtek/hank/**": true,
+        "port/realtek/rtd292x/**": true,
+        "port/realtek/rtd1395/**": true,
+        "port/realtek/rtd2821/**": true,    // true/false
+        "port/realtek/rtd2873/**": true,    // true/false
+        "port/realtek/rtd2873-2893/**": true,
+        "port/realtek/stark/**": true,
+        //sigma
+        "port/sigma/**": true,
+        //wlan
+        "port/wlan/**": true        
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "files.associations": {
+        "*.ts": "xml",
+        "*.expect": "bat",
+        ".bash_functions": "shellscript"
+    },
+    "C_Cpp.intelliSenseCacheSize": 60000,
+    "C_Cpp.intelliSenseMemoryLimit": 15000,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.editorAssociations": {
+        "*.webp": "imagePreview.previewEditor"
+    },
+    "git.enableSmartCommit": true,
+    "perforce.activationMode": "always",
+    "cmake.configureOnOpen": false
+}

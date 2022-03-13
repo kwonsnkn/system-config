@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/port/realtek/reno/cupid/frameworks/native/include/appclass",
+                "${workspaceFolder}/os/3rdParty",
+                "${workspaceFolder}/os/3rdParty/brightscript",
+                "${workspaceFolder}/os/RokuOS/Auxiliary/Include",
+                "${workspaceFolder}/os/RokuOS/Device/Include",
+                "${workspaceFolder}/os/RokuOS/System/Include",
+                "${workspaceFolder}/os/RokuOS/UI/Include",
+                "${workspaceFolder}/os/dist/boost/Carbon14_dev.OBJ/dist/include"
+            ],
+            "defines": [
+                "TV_PRODUCT",
+                "CUSTOM_PKG_JSON",
+                "CONFIG_PM",
+                "CONFIG_COMPAT",
+                "CONFIG_HDMI_COMPABITILITY_STRUCTURE",
+                "CONFIG_DM_AUTH_ROKU"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "cStandard": "c11"
+        }
+    ],
+    "version": 4
+}
