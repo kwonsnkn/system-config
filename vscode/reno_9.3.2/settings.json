@@ -237,7 +237,7 @@
         "port/mtk/miami": true,
         "port/mtk/miami_dvb": true,
         //realtek
-        "port/realtek/**": true, 
+        "port/realtek/**": false, 
         "port/realtek/groot/**": true,
         "port/realtek/hank/**": true,
         "port/realtek/reno": false,         // true/false
