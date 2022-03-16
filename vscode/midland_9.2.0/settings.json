@@ -97,7 +97,12 @@
         "**/.svn": true,
         "os/**/.log": true,
         "**/CVS": true,
-        "os/3rdParty": true,
+        "os/3rdParty": false,
+        "os/3rdParty/[^c]*": true,
+        "os/3rdParty/c[^u]*": true,
+        "os/3rdParty/cu[^s]*": true,
+        "os/3rdParty/custom_pkg/[^m]*": true,
+        "os/3rdParty/custom_pkg/m[^i]*": true,
         "os/addon": true,
         "os/apps/[^mr]*": true,         // exclude all except m* or r*
         "os/apps/m[^f]*": true,         // exclude all except mf*
