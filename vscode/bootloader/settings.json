@@ -43,9 +43,9 @@
         "malone/**": true,
         "miami/**": true,
         "midland/**": true,
-        "reno/**": true,
+        "reno/**": false,
         "rollingwood/**": true,
-        "roma/**": true,
+        "roma/**": false,
         "roxton/**": false,
         "trinidad/**": true
     },
@@ -77,9 +77,9 @@
         "malone/**": true,
         "miami/**": true,
         "midland/**": true,
-        "reno/**": true,
+        "reno/**": false,
         "rollingwood/**": true,
-        "roma/**": true,
+        "roma/**": false,
         "roxton/**": false,
         "trinidad/**": true
     },
