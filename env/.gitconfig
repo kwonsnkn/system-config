@@ -1,0 +1,34 @@
+[user]
+	name = SK Kwon
+	email = skwon@roku.com
+	username = skwon
+[core]
+	editor = vim
+	autocrlf = false
+	excludesfile = /home/skwon/.gitignore
+[alias]
+	pull = pull --recurse-submodules
+	loga = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(reset) %C(bold green)(%an)%C(reset)%C(bold yellow)%d%C(reset)%n           %C(white)%s%C(reset)' --all
+	logb = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(reset) %C(bold green)(%an)%C(reset)%C(bold yellow)%d%C(reset)%n           %C(white)%s%C(reset)'
+
+	p4 = !/opt/git-p4/git-p4.py
+	hooks = !\"/home/skwon/.githooks/bin/githooks\"
+[init]
+	defaultBranch = main
+	templateDir = /home/skwon/.githooks/templates
+[status]
+	submoduleSummary = true
+[githooks]
+	installDir = /home/skwon/.githooks
+	runner = /home/skwon/.githooks/release/base-template.sh
+	cloneUrl = git@gitlab.eng.roku.com:bar/githooks.git
+	cloneBranch = master
+	useCoreHooksPath = false
+[githooks "autoupdate"]
+	enabled = true
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager-core
+	credentialStore = cache
+[credential "https://dev.azure.com"]
+	useHttpPath = true
