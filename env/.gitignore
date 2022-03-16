@@ -1,0 +1,7 @@
+.vscode
+build-carbon
+*.log
+log.txt
+log*.txt
+dist
+git-credential-manager
