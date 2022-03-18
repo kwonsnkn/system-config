@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
 fi
 
 # PATH
-export PATH=${PATH}:$HOME/Scripts:/opt/perforce/p4v-2021.3.2170446/bin:/opt/bootchart:$HOME/Perforce/skwon_edge_01/depot/users/skwon/scripts:/opt/git-p4
+export PATH=${PATH}:$HOME/Scripts:/opt/perforce/p4v/bin:/opt/bootchart:$HOME/Perforce/skwon_edge_01/depot/users/skwon/scripts:/opt/git-p4
  
 export FAST_HOME=/home/skwon/Tools/factoryserialtool
 export FAST_CLI=fast.py
