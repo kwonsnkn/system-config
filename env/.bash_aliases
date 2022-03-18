@@ -3,12 +3,10 @@ if [[ $HOSTNAME == "skwon-edge" ]]; then
     export P4_WS=$HOME/Perforce/skwon_edge_01
     export GITLAB_PARTNER=$HOME/Gitlab/gitlab.partner	
     export GITLAB_ENG=$HOME/Gitlab/gitlab.eng	
-    echo "host name skwon-edge"
 elif [[ $HOSTNAME == "20HZDW2" ]]; then
     export P4_WS=/work1/p4
     export GITLAB_PARTNER=/work/gitlab/gitlab-partner	
     export GITLAB_ENG=/work/gitlab/gitlab.eng
-    echo "host name 20HZDW2"
 else
     echo "Unknown host name $HOSTNAME"
 fi
@@ -29,14 +27,14 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # chnage monitor source to HDMI (15: DP, 17: HDMI 1, 18: HDMI 2)
-alias chmonitorsrc='ddccontrol -r 0x60 -w 17 dev:/dev/i2c-4'
+alias chmonitorsrc='ddccontrol -r 0x60 -w 17 dev:/dev/i2c-17'
 
 # GPG
 function gpgsearch      { gpg --keyserver keymaster.corp.roku.com --search-keys $1; } # $1: userid
 function gpgfingerprint { gpg --fingerprint $1; } # gpg --fingerprint <email>
 function gpgimport      { gpg --import $1; } # gpg --import <private_key> 
 function gpglistsecret  { gpg --list-secret-keys $1; } # $1: email 
-function gpglistkeys    { gpg --list-keys; } 
+function gpglistkeys    { gpg --list-keys --keyid-format LONG; } 
 function gpgenc         { gpg --encrypt --sign --armor -r $1 $2; } # $1: email, $2: filename
 function gpgdec         { gpg --decrypt $1 > $(echo "$1" | sed -e 's/\.[^.]*$//'); } # $1: filename
 
