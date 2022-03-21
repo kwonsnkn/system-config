@@ -20,7 +20,7 @@
     ],
     "files.exclude": {
         "**/.DS_Store": true,
-        "**/.git": false,
+        "**/.git": true,
         "**/.hg": true,
         "**/.svn": true,
         "**/.log": true,
@@ -45,7 +45,7 @@
         "midland/**": true,
         "reno/**": false,
         "rollingwood/**": true,
-        "roma/**": false,
+        "roma/**": true,
         "roxton/**": false,
         "trinidad/**": true
     },
@@ -54,7 +54,7 @@
     },
     "search.exclude": {
         "**/.DS_Store": true,
-        "**/.git": false,
+        "**/.git": true,
         "**/.hg": true,
         "**/.svn": true,
         "**/.log": true,
@@ -79,7 +79,7 @@
         "midland/**": true,
         "reno/**": false,
         "rollingwood/**": true,
-        "roma/**": false,
+        "roma/**": true,
         "roxton/**": false,
         "trinidad/**": true
     },

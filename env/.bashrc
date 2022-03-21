@@ -120,3 +120,4 @@ export PATH=$PATH:$FAST_HOME
 
 export PATH=$PATH:/opt/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux/bin
 export PATH=$PATH:/opt/riscv-none-gcc/7.2.0-4-20180606-1631/bin
+export PATH=$PATH:/home/skwon/Tools/aml_dnl-ubuntu
