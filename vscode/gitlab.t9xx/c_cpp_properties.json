@@ -11,7 +11,7 @@
                 "${workspaceFolder}/os/RokuOS/Device/Include",
                 "${workspaceFolder}/os/RokuOS/System/Include",
                 "${workspaceFolder}/os/RokuOS/UI/Include",
-                "${workspaceFolder}/os/dist/boost/Carbon14_dev.OBJ/dist/include"
+                "${workspaceFolder}/platform/br/bootloader/uboot-repo/bl33/v2015/include"
             ],
             "defines": [
                 "TV_PRODUCT",

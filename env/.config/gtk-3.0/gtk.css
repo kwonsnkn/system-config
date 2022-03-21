@@ -1,3 +1,20 @@
+.titlebar {
+    background: #80621C;
+}
+
+.titlebar:backdrop  {
+    background: #303030;
+    color:#808080;
+}
+
+decoration {
+    border: 2px solid #80621C;
+    background: #80621C;
+}
+decoration:backdrop {
+    border: 2px solid #303030;
+    background: #303030;
+}
 /* shrink headerbars (don't forget semicolons after each property) */
 headerbar {
     min-height: 0px;
@@ -27,8 +44,8 @@ headerbar separator {
 }
 
 window.ssd headerbar.titlebar {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     min-height: 0;
 }
 
