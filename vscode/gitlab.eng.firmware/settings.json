@@ -97,7 +97,7 @@
         "**/.svn": true,
         "os/**/.log": true,
         "**/CVS": true,
-        "os/3rdParty": true,
+        "os/3rdParty": false,
         "os/addon": true,
         "os/apps/[^mr]*": true,         // exclude all except m* or r*
         "os/apps/m[^f]*": true,         // exclude all except mf*
