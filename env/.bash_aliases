@@ -85,6 +85,7 @@ cdrtn()   { cd $P4_WS/depot/firmware/release/$1; }
 cdbootloader()   { cd $P4_WS/depot/edelivery/STB-Client/bootloaders/$1; }
 cdteeloader()    { cd $P4_WS/depot/edelivery/STB-Client/teeloaders/$1; }
 cdroxton()       { cd $GITLAB_PARTNER/aml-t9xx/t9xx; }
+cdroxtonsecure()       { cd $GITLAB_PARTNER/aml-t962-secure/secure_boot_dev; }
 
 # DOCKER BUILD
 alias docker-bake=$P4_WS/depot/firmware/release/main/os/scripts/docker/localcontainer/docker-bake
