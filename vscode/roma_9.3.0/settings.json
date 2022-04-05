@@ -112,8 +112,8 @@
         "os/src": true,
         "os/oe": true,
         "os/RokuOS/**": false,              // RokuOS
-        "os/RokuOS/Tools/**": true,
-        "os/RokuOS/ToolsLib/**": true,
+        "os/RokuOS/Tools/**": false,
+        "os/RokuOS/ToolsLib/**": false,
         "os/scripts/[^b]*": true,
         "os/scripts/build-metrics/**": true,
         "port/**/build-carbon": true,
