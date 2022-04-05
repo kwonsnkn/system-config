@@ -19,7 +19,26 @@
                 "CONFIG_PM",
                 "CONFIG_COMPAT",
                 "CONFIG_HDMI_COMPABITILITY_STRUCTURE",
-                "CONFIG_DM_AUTH_ROKU"
+                "CONFIG_DM_AUTH_ROKU",
+                //platform/br/kernel/aml-4.9/arch/arm/configs/meson64_a32_defconfig
+                "CONFIG_MEMCG",
+                "CONFIG_MEMCG_SWAP",
+                "CONFIG_MEMCG_SWAP_ENABLED",
+                "CONFIG_PGTABLE_MAPPING",                
+                "CONFIG_ROKU_RCLOG",
+                "CONFIG_RCLOG_BUF_SIZE_KB",
+                "CONFIG_ROKU_LTCORE",
+                "CONFIG_ROKU_SERIAL_AMLOGIC",
+                "CONFIG_SERIAL_AMLOGIC_LOOPBACK",
+                "CONFIG_ROKU_PERSISTENT_BUFFER",
+                "CONFIG_SQUASHFS_ROKU",
+                "CONFIG_ROKU_NAND",
+                "CONFIG_ROKU_MTD_NAND_ENCRYPTION",
+                "CONFIG_DM_AUTH_ROKU",
+                "CONFIG_CRAMFS_ROKU",
+                "CONFIG_ROKU_REMOTE_QUICK_RELEASE",
+                "CONFIG_GRKERNSEC_ROKU_ENABLE_PROC_PAGE_MONITOR",
+                "CONFIG_ROKU_SWUPD"
             ],
             "intelliSenseMode": "gcc-x64",
             "cStandard": "c11"
