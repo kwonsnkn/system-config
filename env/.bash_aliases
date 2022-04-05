@@ -129,7 +129,7 @@ function buildfw
 	    cd os
 	    rm dist/rootfs/* -rf && \
 	    rm dist/skeleton/* -rf && \
-	    time make -j26 BUILD_PLATFORM=$3 rootfs dist-package |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	    time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 rootfs dist-package |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	elif [[ $6 = "port" ]]; then
 	    if [[ $3 = "roma" ]]; then
                 cd port/$2/rtd2821/$3
@@ -138,28 +138,28 @@ function buildfw
             fi
 	    rm build-carbon/rootfs/* -rf && \
 	    rm build-carbon/custom_pkg/* -rf && \
-	    #time docker-u20-make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 IMAGE_TYPE=acramfs image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-	    time make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 IMAGE_TYPE=acramfs image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	    #time docker-u20-make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 IMAGE_TYPE=acramfs image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	    time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 IMAGE_TYPE=acramfs image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	elif [[ $6 = "debug" ]]; then
             echo "Build nfs-image"
 	    cd os
             export NFSROOT=${HOME}/nfs/$3/rootfs
             export EXPORTROOT=${NFSROOT}
-	    time make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false PAX_DEBUG=on PAXCTL=paxctl rootfs port-image nfs-make|& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	    time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false PAX_DEBUG=on PAXCTL=paxctl rootfs port-image nfs-make|& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	elif [[ $6 = "ecc" ]]; then
             echo "Build ECC Image"
 	    cd os
             export NFSROOT=${HOME}/nfs/$3/rootfs
             export EXPORTROOT=${NFSROOT}
-	    time make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false NEW_VENDOR=true rootfs port-image port-build_ecc_file |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	    time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false NEW_VENDOR=true rootfs port-image port-build_ecc_file |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	else
             echo "Build acramfs from os"
 	    cd os
             export NFSROOT=${HOME}/nfs/$3/rootfs
 	    if [[ $4 = "midland_9.2.0" ]]; then
-	        time make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	    else
-	        time make -j26 BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false NEW_VENDOR=true rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+	        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=$3 OEM_PARTNER=$5 STRIP_DEBUG=false NEW_VENDOR=true rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 	    fi
 	fi
 }
@@ -168,7 +168,7 @@ function buildfw
 function buildreno
 {
 cd ~/Gitlab/gitlab.partner/rtd2873/rtd2873/reno
-time make -j26 ROKU_OS_DIR=~/Gitlab/gitlab.partner/rtd2873/porting_kit/OS/os BUILD_PLATFORM=reno image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=~/Gitlab/gitlab.partner/rtd2873/porting_kit/OS/os BUILD_PLATFORM=reno image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
 }
 
 # ecpu (RENO, ROMA) 
