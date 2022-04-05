@@ -7,7 +7,6 @@
 	autocrlf = false
 	excludesfile = /home/skwon/.gitignore
 [alias]
-	pull = pull --recurse-submodules
 	loga = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(reset) %C(bold green)(%an)%C(reset)%C(bold yellow)%d%C(reset)%n           %C(white)%s%C(reset)' --all
 	logb = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(reset) %C(bold green)(%an)%C(reset)%C(bold yellow)%d%C(reset)%n           %C(white)%s%C(reset)'
 
@@ -32,3 +31,5 @@
 	credentialStore = cache
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[submodule]
+	recurse = true

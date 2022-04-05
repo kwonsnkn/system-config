@@ -85,6 +85,7 @@ cdrtn()   { cd $P4_WS/depot/firmware/release/$1; }
 cdbootloader()   { cd $P4_WS/depot/edelivery/STB-Client/bootloaders/$1; }
 cdteeloader()    { cd $P4_WS/depot/edelivery/STB-Client/teeloaders/$1; }
 cdroxton()       { cd $GITLAB_PARTNER/aml-t9xx/t9xx; }
+cdfirmware()       { cd $GITLAB_ENG/firmware/firmware; }
 
 # DOCKER BUILD
 alias docker-bake=$P4_WS/depot/firmware/release/main/os/scripts/docker/localcontainer/docker-bake
@@ -320,6 +321,7 @@ function buildlongviewmfg
 function buildroxton
 {
     if [ $# -eq 1 ] && [ $1 = "os" ]; then
+	export NFSROOT=${HOME}/nfs/roxton/rootfs
         cd $GITLAB_ENG/firmware/firmware/os
         time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     elif [ $# -eq 1 ] && [ $1 = "port" ]; then
