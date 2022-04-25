@@ -18,6 +18,9 @@ export NFSROOT=${HOME}/nfs/reno/rootfs
 export ROKU_NFS_IP=`hostname -I | cut -d ' ' -f 1`
 export EXPORTROOT=${NFSROOT}
 
+# 
+export SEC=${HOME}/Work/Roxton/Security
+
 # Aliases
 alias sudo='sudo '
 
@@ -87,6 +90,7 @@ cdteeloader()    { cd $P4_WS/depot/edelivery/STB-Client/teeloaders/$1; }
 cdroxton()       { cd $GITLAB_PARTNER/aml-t9xx/t9xx; }
 cdfirmware()       { cd $GITLAB_ENG/firmware/firmware; }
 cdroxtonsecure()       { cd $GITLAB_PARTNER/aml-t962-secure/secure_boot_dev; }
+cdsec()       { cd $SEC; }
 
 # DOCKER BUILD
 alias docker-bake=$P4_WS/depot/firmware/release/main/os/scripts/docker/localcontainer/docker-bake
@@ -324,7 +328,8 @@ function buildroxton
     if [ $# -eq 1 ] && [ $1 = "os" ]; then
 	export NFSROOT=${HOME}/nfs/roxton/rootfs
         cd $GITLAB_ENG/firmware/firmware/os
-        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        # time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton STRIP_DEBUG=false PAX_DEBUG=on rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     elif [ $# -eq 1 ] && [ $1 = "port" ]; then
         cd $GITLAB_PARTNER/aml-t9xx/t9xx/roxton
         time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
@@ -333,4 +338,17 @@ function buildroxton
         echo "  buildroxton [os|port]"
         return
     fi
+}
+
+function buildroxtonbootloader
+{
+  cd $P4_WS/depot/edelivery/STB-Client/bootloaders/roxton/bootloader && \
+  ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
+  ./mk t5d_am301_recovery_v1 --update-bl2
+  cd fip/_tmp
+  zip t5d_am301_recovery_v1-u-boot.aml.zip bl2_new.bin bl30_new.bin bl31.img bl33.bin
+  mv t5d_am301_recovery_v1-u-boot.aml.zip ~/Work/Roxton/Security/t5d_signing_tool_for_usb_boot/input/
+  cd ~/Work/Roxton/Security/t5d_signing_tool_for_usb_boot
+  sh ./sign.sh
+  cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/evt2_recovery/
 }

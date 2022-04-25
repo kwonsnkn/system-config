@@ -112,6 +112,7 @@ if ! shopt -oq posix; then
 fi
 
 # PATH
+export PATH=${PATH}:/home/skwon/workspace/ldd/downloads/gcc-linaro-11.2.1-2022.02-x86_64_arm-linux-gnueabihf/bin
 export PATH=${PATH}:$HOME/Scripts:/opt/perforce/p4v/bin:/opt/bootchart:$HOME/Perforce/skwon_edge_01/depot/users/skwon/scripts:/opt/git-p4
  
 export FAST_HOME=/home/skwon/Tools/factoryserialtool
