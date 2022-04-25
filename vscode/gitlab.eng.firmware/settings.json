@@ -105,7 +105,7 @@
         "os/apps/[^mr]*": true,         // exclude all except m* or r*
         "os/apps/m[^f]*": true,         // exclude all except mf*
         "os/apps/mfg_[^a]*": true,      // exclude all except mfg_app_k*
-        "os/apps/mfg_app_[^k]*": true,  // exclude all except mfg_app_k*
+        "os/apps/mfg_app_[^ck]*": true,  // exclude all except mfg_app_k*
         "os/apps/roku_[^m]*": true,        
         "os/components/**": true,
         "os/dist/**": true,
@@ -209,7 +209,7 @@
         "os/apps/[^mr]*": true,         // exclude all except m* or r*
         "os/apps/m[^f]*": true,         // exclude all except mf*
         "os/apps/mfg_[^a]*": true,      // exclude all except mfg_app_k*
-        "os/apps/mfg_app_[^k]*": true,  // exclude all except mfg_app_k*
+        "os/apps/mfg_app_[^ck]*": true,  // exclude all except mfg_app_k*
         "os/apps/roku_[^m]*": true,        
         "os/components/**": true,
         "os/dist/**": true,
