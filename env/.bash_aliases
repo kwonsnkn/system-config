@@ -11,6 +11,7 @@ else
     echo "Unknown host name $HOSTNAME"
 fi
 export P4CONFIG=.p4config
+export GITLAB_BOOTLOADER=$GITLAB_PARTNER/aml-t962-secure/secure_boot_dev
 
 # ROKU NFS BUILD ENV
 #export ROKU_NFS_ROOT=${HOME}/nfs/rootfs
@@ -332,7 +333,8 @@ function buildroxton
         time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton STRIP_DEBUG=false PAX_DEBUG=on rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     elif [ $# -eq 1 ] && [ $1 = "port" ]; then
         cd $GITLAB_PARTNER/aml-t9xx/t9xx/roxton
-        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ecc_nand |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     else
         echo "Usage:"
         echo "  buildroxton [os|port]"
@@ -342,13 +344,45 @@ function buildroxton
 
 function buildroxtonbootloader
 {
-  cd $P4_WS/depot/edelivery/STB-Client/bootloaders/roxton/bootloader && \
-  ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
-  ./mk t5d_am301_recovery_v1 --update-bl2
-  cd fip/_tmp
-  zip t5d_am301_recovery_v1-u-boot.aml.zip bl2_new.bin bl30_new.bin bl31.img bl33.bin
-  mv t5d_am301_recovery_v1-u-boot.aml.zip ~/Work/Roxton/Security/t5d_signing_tool_for_usb_boot/input/
-  cd ~/Work/Roxton/Security/t5d_signing_tool_for_usb_boot
-  sh ./sign.sh
-  cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/evt2_recovery/
+  #cd $P4_WS/depot/edelivery/STB-Client/bootloaders/roxton/bootloader && \
+  cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+  ./mk t5d_am301_v1 --update-bl2 clean && \
+  ./mk t5d_am301_v1 --update-bl2 && \
+  cd ~/Work/Roxton/Security/t5d_signing_tool_for_usb_boot && \
+  rm input/*; \
+  rm output/*; \
+  cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/sign_tmp/t5d_am301_v1-u-boot.aml.zip input/ && \
+  sh ./sign.sh && \
+  cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/evt1_recovery/ && \
+  cd $GITLAB_BOOTLOADER/bootloader/uboot-repo
+}
+
+# buildroxtonbootloaderforusb evt1/evt2 build
+function buildroxtonbootloaderforusb
+{
+  #cd $P4_WS/depot/edelivery/STB-Client/bootloaders/roxton/bootloader && \
+  #
+  if [ $# -eq 2 ] && [ $2 = "build" ]; then
+    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+    git checkout user/skwon/bootloader-for-usb-unbrick && \
+    rm $GITLAB_BOOTLOADER/bootloader/uboot-repo/bl33/v2015/board/amlogic/t5d_am301_v1/aml-key
+    ln -s ~/Work/Roxton/Security/t5d_signing_tool/keydir-$1 $GITLAB_BOOTLOADER/bootloader/uboot-repo/bl33/v2015/board/amlogic/t5d_am301_v1/aml-key
+    ./mk t5d_am301_v1 --update-bl2 clean && \
+    echo "./mk t5d_am301_v1 --update-bl2 > build.log" && \
+    ./mk t5d_am301_v1 --update-bl2 > build.log && \
+    rm ~/Work/Roxton/Security/t5d_signing_tool/input/* && \
+    cp fip/_tmp/sign_tmp/t5d_am301_v1-u-boot.aml.zip ~/Work/Roxton/Security/t5d_signing_tool/input/ && \
+    cd ~/Work/Roxton/Security/t5d_signing_tool 
+  else
+    cd ~/Work/Roxton/Security/t5d_signing_tool && \
+    rm ./input/* && \
+    cp ./zt_t5d_ops_efuse_check_v1-u-boot.aml.zip ./input/
+  fi  
+  rm keydir && \
+  ln -s ./keydir-$1 keydir &&\
+  rm ./output/* && \
+  ./sign.sh && \
+  cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
+  ls -al output &&\
+  cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
 }
