@@ -326,15 +326,28 @@ function buildlongviewmfg
 
 function buildroxton
 {
-    if [ $# -eq 1 ] && [ $1 = "os" ]; then
+    if [[ $# -lt 1 ]]; then
+        echo "Usage:"
+        echo "  buildroxton [os|port] [ecc]"
+	return
+    fi
+
+    if [ $# -eq 2 ] && [ $2 = "ecc" ]; then
+        export ECC_BUILD_FLAG="ecc_nand"
+    else
+        export ECC_BUILD_FLAG=
+    fi
+
+    if [ $1 = "os" ]; then
 	export NFSROOT=${HOME}/nfs/roxton/rootfs
         cd $GITLAB_ENG/firmware/firmware/os
         # time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton STRIP_DEBUG=false PAX_DEBUG=on rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton STRIP_DEBUG=false PAX_DEBUG=on rootfs port-image ${ECC_BUILD_FLAG} |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     elif [ $# -eq 1 ] && [ $1 = "port" ]; then
         cd $GITLAB_PARTNER/aml-t9xx/t9xx/roxton
         #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ecc_nand |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ecc_nand |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ${ECC_BUILD_FLAG} OEM_PARTNER=cvte-ktc-multiple |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     else
         echo "Usage:"
         echo "  buildroxton [os|port]"
@@ -344,35 +357,63 @@ function buildroxton
 
 function buildroxtonbootloader
 {
-  cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
-  ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
-  ./mk t5d_am301_recovery_v1 --update-bl2 --tc false --build bootloader -ss bronze && \
-  cd ~/Work/Roxton/Security/s2_signing/ && \
-  rm bl2*; \
-  rm r-uboot.bin; \
-  rm random*; \
-  rm zeroiv; \
-  rm RokuBoot.bin*; \
-  cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/bl2_fw.bin ~/Work/Roxton/Security/s2_signing/ && \
-  cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/r-uboot.bin ~/Work/Roxton/Security/s2_signing
-  if [ $# -eq 1 ] && [ $1 = "evt1" ]; then
-    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.aur ~/Work/Roxton/Security/s2_signing/bl2.hdr
-    ./create_bootbin.sh keys_aurora_s2/
-    echo "./create_bootbin.sh keys_aurora_s2/"
-  elif [ $# -eq 1 ] && [ $1 = "evt2" ]; then
-    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.rox_s2 ~/Work/Roxton/Security/s2_signing/bl2.hdr
-    ./create_bootbin.sh keys_rox_s2/
-    echo "./create_bootbin.sh keys_rox_s2/"
-  else
-    echo "invalid board type $1"
-  fi
+    if [[ $# -lt 1 ]]; then
+        echo "Usage:"
+        echo "  buildroxtonbootloader [evt1|evt2] [copy]"
+	return
+    fi
+    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 --tc false --build bootloader -ss bronze && \
+    cd ~/Work/Roxton/Security/s2_signing/ && \
+    rm bl2*; \
+    rm r-uboot.bin; \
+    rm random*; \
+    rm zeroiv; \
+    rm RokuBoot.bin*; \
+    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/bl2_fw.bin ~/Work/Roxton/Security/s2_signing/ && \
+    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/r-uboot.bin ~/Work/Roxton/Security/s2_signing
+    if [[ $1 = "evt1" ]]; then
+        #### Sign EVT1 
+        echo "./create_bootbin.sh keys_aurora_s2/"
+        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.aur ~/Work/Roxton/Security/s2_signing/bl2.hdr
+        ./create_bootbin.sh keys_aurora_s2/
+        #### COPY RokuBoot.bin 
+        if [[ $2 = "copy" ]]; then
+            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt"
+            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt
+        fi
+    elif [[ $1 = "evt2" ]]; then
+        #### Sign EVT2
+        echo "./create_bootbin.sh keys_rox_s2/"
+        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.rox_s2 ~/Work/Roxton/Security/s2_signing/bl2.hdr
+        ./create_bootbin.sh keys_rox_s2/
+        #### COPY RokuBoot.bin 
+        if [[ $2 = "copy" ]]; then
+            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt2"
+            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt2
+        fi
+    else
+        echo "invalid board type $1"
+    fi
+    #### BUILD preuboot.bin & preuboot.bin.sig 
+    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 --tc false --build teeloader -ss bronze && \
+    #### COPY preuboot.bin & preuboot.bin.sig 
+    if [[ $2 = "copy" ]]; then
+        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/
+        cp preuboot.bin ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin
+        cp preuboot.bin.sig ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin.sig
+    fi
 }
 
 # check compile error in main uboot
 function buildroxtonubootdryrun
 {
   cd $GITLAB_PARTNER/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/
-  ./mk t5d_am301_recovery_v1 
+  ./mk t5d_am301_v1 clean
+  ./mk t5d_am301_v1 
 }
 
 # buildroxtonbootloaderforusb evt1/evt2 build
@@ -394,9 +435,9 @@ function buildroxtonbootloaderforusb
     rm keydir ; \
     ln -s ./keydir-$1 keydir &&\
     rm ./output/* && \
-    ./sign.sh && \
-    cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
-    cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
+    ./sign.sh
+    #cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
+    #cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
     #cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/$1_recovery/uboot_recovery.bin
   elif [ $# -eq 1 ]; then
     cd ~/Work/Roxton/Security/t5d_signing_tool && \
