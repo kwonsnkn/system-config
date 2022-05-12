@@ -419,38 +419,40 @@ function buildroxtonubootdryrun
 # buildroxtonbootloaderforusb evt1/evt2 build
 function buildroxtonbootloaderforusb
 {
-  if [ $# -eq 2 ] && [ $2 = "build" ]; then
-    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
-    #git checkout user/skwon/bootloader-for-usb-unbrick && \
-    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/bl33/v2015/board/amlogic/t5d_am301_v1/
-    rm aml-key ; \
-    ln -s ~/Work/Roxton/Security/t5d_signing_tool/keydir-$1 aml-key && \
-    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
-    ./mk t5d_am301_v1 --update-bl2 clean && \
-    echo "./mk t5d_am301_v1 --update-bl2 > build.log" && \
-    ./mk t5d_am301_v1 --update-bl2 > build.log && \
-    rm ~/Work/Roxton/Security/t5d_signing_tool/input/* ; \
-    cp fip/_tmp/sign_tmp/t5d_am301_v1-u-boot.aml.zip ~/Work/Roxton/Security/t5d_signing_tool/input/ && \
-    cd ~/Work/Roxton/Security/t5d_signing_tool && \ 
-    rm keydir ; \
-    ln -s ./keydir-$1 keydir &&\
-    rm ./output/* && \
-    ./sign.sh
-    #cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
-    #cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
-    #cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/$1_recovery/uboot_recovery.bin
-  elif [ $# -eq 1 ]; then
-    cd ~/Work/Roxton/Security/t5d_signing_tool && \
-    rm ./input/* && \
-    rm ./output/* && \
-    cp ./zt_t5d_ops_efuse_check_v1-u-boot.aml.zip ./input/
-    rm keydir && \
-    ln -s ./keydir-$1 keydir &&\
-    ./sign.sh && \
-    cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
-    cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
-  else
-    echo "Invalid arguments"
-    echo "Usage: buildroxtonbootloaderforusb evt1|evt2 [build]"
-  fi
+    if [ $# -eq 2 ] && [ $2 = "build" ]; then
+        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+        #git checkout user/skwon/bootloader-for-usb-unbrick && \
+        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/bl33/v2015/board/amlogic/t5d_am301_v1/
+        rm aml-key ; \
+        ln -s ~/Work/Roxton/Security/t5d_signing_tool/keydir-$1 aml-key && \
+        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+        ./mk t5d_am301_v1 --update-bl2 clean && \
+        echo "./mk t5d_am301_v1 --update-bl2 > build.log" && \
+        ./mk t5d_am301_v1 --update-bl2 > build.log && \
+        rm ~/Work/Roxton/Security/t5d_signing_tool/input/* ; \
+        #cp fip/_tmp/sign_tmp/t5d_am301_v1-u-boot.aml.zip ~/Work/Roxton/Security/t5d_signing_tool/input/ && \
+        cd fip/_tmp/
+        zip ~/Work/Roxton/Security/t5d_signing_tool/input/t5d_am301_v1-u-boot.aml.zip bl2_new.bin bl30_new.bin bl31.img bl33.bin && \
+        cd ~/Work/Roxton/Security/t5d_signing_tool && \ 
+        rm keydir ; \
+        ln -s ./keydir-$1 keydir &&\
+        rm ./output/* ; \
+        ./sign.sh
+        cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
+        cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
+        #cp output/u-boot.bin.signed.encrypted ~/Work/Roxton/Security/$1_recovery/uboot_recovery.bin
+    elif [ $# -eq 1 ]; then
+        cd ~/Work/Roxton/Security/t5d_signing_tool && \
+        rm ./input/* && \
+        rm ./output/* && \
+        cp ./zt_t5d_ops_efuse_check_v1-u-boot.aml.zip ./input/
+        rm keydir && \
+        ln -s ./keydir-$1 keydir &&\
+        ./sign.sh && \
+        cat output/u-boot.bin.usb.bl2.signed.encrypted output/u-boot.bin.usb.tpl.unsigned > output/uboot_recovery.bin && \
+        cp output/uboot_recovery.bin ~/Work/Roxton/Security/$1_recovery/
+    else
+        echo "Invalid arguments"
+        echo "Usage: buildroxtonbootloaderforusb evt1|evt2 [build]"
+    fi
 }
