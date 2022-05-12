@@ -4,13 +4,6 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/port/realtek/reno/cupid/frameworks/native/include/appclass",
-                "${workspaceFolder}/os/3rdParty",
-                "${workspaceFolder}/os/3rdParty/brightscript",
-                "${workspaceFolder}/os/RokuOS/Auxiliary/Include",
-                "${workspaceFolder}/os/RokuOS/Device/Include",
-                "${workspaceFolder}/os/RokuOS/System/Include",
-                "${workspaceFolder}/os/RokuOS/UI/Include",
                 "${workspaceFolder}/platform/br/bootloader/uboot-repo/bl33/v2015/include"
             ],
             "defines": [
@@ -38,7 +31,8 @@
                 "CONFIG_CRAMFS_ROKU",
                 "CONFIG_ROKU_REMOTE_QUICK_RELEASE",
                 "CONFIG_GRKERNSEC_ROKU_ENABLE_PROC_PAGE_MONITOR",
-                "CONFIG_ROKU_SWUPD"
+                "CONFIG_ROKU_SWUPD",
+                "CONFIG_BOARD_LATE_INIT"
             ],
             "intelliSenseMode": "gcc-x64",
             "cStandard": "c11"

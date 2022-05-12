@@ -20,7 +20,8 @@
                 "CONFIG_PM",
                 "CONFIG_COMPAT",
                 "CONFIG_HDMI_COMPABITILITY_STRUCTURE",
-                "CONFIG_DM_AUTH_ROKU"
+                "CONFIG_DM_AUTH_ROKU",
+                "__ROKU_SUPPORT__"
             ],
             "intelliSenseMode": "gcc-x64",
             "cStandard": "c11"
