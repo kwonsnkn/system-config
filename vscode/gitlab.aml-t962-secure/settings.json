@@ -24,10 +24,22 @@
         "**/.log": true,
         "**/CVS": true,
         // bl2/src/plat/t5d
-        "**/plat/[^tc]*/**": true,
-        "**/plat/c[12]*/**": true,
-        "**/plat/t[^5]*/**": true,
-        "**/plat/t5/**": true,
+        //"**/plat/[^tc]*/**": true,
+        //"**/plat/c[12]*/**": true,
+        //"**/plat/t[^5]*/**": true,
+        "optee/tmp/**": true,
+        "optee/optee_os/optee_ta/**": true,
+        "optee/optee_os/out/**": true,
+        //"optee/optee_os/tdk/**": true,
+        // opt
+        "secure_boot_dev/bootloader/uboot-repo/opt/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/bl30/src_ao/demos/amlogic/n200/t5d/t5d_am301_v1/gcc/**": true,
+        // build directories
+        "secure_boot_dev/bootloader/uboot-repo/bl2/src/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/bl31_1.3/src/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/bl33/v2015/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/fip/_tmp/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/build/**": true,
         // bl33/v2015/arch/
         "**/bl33/v2015/arch/[^a]*/**": true,
         "**/bl33/v2015/arch/a[^r]*/**": true,
@@ -67,11 +79,14 @@
         "**/.svn": true,
         "**/.log": true,
         "**/CVS": true,
-        // bl2/plat/t5d
-        "**/plat/[^tc]*/**": true,
-        "**/plat/c[12]*/**": true,
-        "**/plat/t[^5]*/**": true,
-        "**/plat/t5/**": true,
+        // opt
+        "secure_boot_dev/bootloader/uboot-repo/opt/**": true,
+        // build directories
+        "secure_boot_dev/bootloader/uboot-repo/bl2/src/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/bl31_1.3/src/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/bl33/v2015/build/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/fip/_tmp/**": true,
+        "secure_boot_dev/bootloader/uboot-repo/build/**": true,        
         // // bl33/v2015/arch/
         "**/bl33/v2015/arch/[^a]*/**": true,
         "**/bl33/v2015/arch/a[^r]*/**": true,

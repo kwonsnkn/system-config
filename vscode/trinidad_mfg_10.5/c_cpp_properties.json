@@ -11,7 +11,12 @@
                 "${workspaceFolder}/os/RokuOS/Device/Include",
                 "${workspaceFolder}/os/RokuOS/System/Include",
                 "${workspaceFolder}/os/RokuOS/UI/Include",
-                "${workspaceFolder}/os/dist/boost/Carbon14_dev.OBJ/dist/include"
+                "${workspaceFolder}/os/dist/boost/Carbon14_dev.OBJ/dist/include",
+                "${workspaceFolder}/port/mediatek/r819/platform/u-boot/MBoot/u-boot-2011.06/include",
+                "${workspaceFolder}/port/mediatek/r819/platform/u-boot/include/common",
+                "${workspaceFolder}/port/mediatek/r819/platform/adaptation/mpool",
+                "${workspaceFolder}/port/mediatek/r819/platform/adaptation/mpool",
+                "${workspaceFolder}/port/mediatek/r819/platform/u-boot/MBoot/u-boot-2011.06/tools/env"
             ],
             "defines": [
                 "TV_PRODUCT",

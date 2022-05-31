@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/platform/br/bootloader/uboot-repo/bl33/v2015/include"
+                "${workspaceFolder}/platform/br/bootloader/uboot-repo/bl33/v2015/include",
+                "${workspaceFolder}/platform/br/bootloader/uboot-repo/bl33/v2015/build/include"
             ],
             "defines": [
                 "TV_PRODUCT",
@@ -13,11 +14,10 @@
                 "CONFIG_COMPAT",
                 "CONFIG_HDMI_COMPABITILITY_STRUCTURE",
                 "CONFIG_DM_AUTH_ROKU",
-                //platform/br/kernel/aml-4.9/arch/arm/configs/meson64_a32_defconfig
                 "CONFIG_MEMCG",
                 "CONFIG_MEMCG_SWAP",
                 "CONFIG_MEMCG_SWAP_ENABLED",
-                "CONFIG_PGTABLE_MAPPING",                
+                "CONFIG_PGTABLE_MAPPING",
                 "CONFIG_ROKU_RCLOG",
                 "CONFIG_RCLOG_BUF_SIZE_KB",
                 "CONFIG_ROKU_LTCORE",

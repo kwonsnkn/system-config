@@ -27,7 +27,7 @@
         "**/.log": true,
         "roxton/**/*.log": true,
         "**/CVS": true,
-        "roxton/dist/**": true,
+        "roxton/dist/**": false,
         // bl33/v2015/arch/
         "**/bl33/v2015/arch/[^a]*/**": true,
         "**/bl33/v2015/arch/a[^r]*/**": true,

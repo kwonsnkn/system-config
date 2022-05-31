@@ -11,7 +11,13 @@ else
     echo "Unknown host name $HOSTNAME"
 fi
 export P4CONFIG=.p4config
+export GITLAB_T9XX=$GITLAB_PARTNER/aml-t9xx/t9xx
 export GITLAB_BOOTLOADER=$GITLAB_PARTNER/aml-t962-secure/secure_boot_dev
+export GITLAB_AMLOGIC_OPTEE=$GITLAB_PARTNER/aml-t962-secure/optee
+export GITLAB_AMLOGIC_TA_ROXTON=$GITLAB_PARTNER/aml-ta-secure/roxton
+export GITLAB_SECURE_AMLOGIC=$GITLAB_ENG/firmware_security/amlogic
+export GITLAB_SECURE_AMLOGIC_OPTEE=$GITLAB_ENG/firmware_security/amlogic/optee
+export GITLAB_SECURE_AMLOGIC_OPTEE_T9XX=$GITLAB_ENG/firmware_security/amlogic/optee/t9xx
 
 # ROKU NFS BUILD ENV
 #export ROKU_NFS_ROOT=${HOME}/nfs/rootfs
@@ -343,11 +349,10 @@ function buildroxton
         cd $GITLAB_ENG/firmware/firmware/os
         # time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton rootfs port-image |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
         time make -j$(grep -c processor /proc/cpuinfo) BUILD_PLATFORM=roxton STRIP_DEBUG=false PAX_DEBUG=on rootfs port-image ${ECC_BUILD_FLAG} |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-    elif [ $# -eq 1 ] && [ $1 = "port" ]; then
+    elif [ $1 = "port" ]; then
         cd $GITLAB_PARTNER/aml-t9xx/t9xx/roxton
-        #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-        #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ecc_nand |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
-        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ${ECC_BUILD_FLAG} OEM_PARTNER=cvte-ktc-multiple |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        #time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ${ECC_BUILD_FLAG} OEM_PARTNER=cvte-ktc-multiple |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
+        time make -j$(grep -c processor /proc/cpuinfo) ROKU_OS_DIR=../../porting_kit/os/ ${ECC_BUILD_FLAG} |& tee ./build-$(date "+%Y-%m-%d-%H:%M:%S").log
     else
         echo "Usage:"
         echo "  buildroxton [os|port]"
@@ -359,12 +364,14 @@ function buildroxtonbootloader
 {
     if [[ $# -lt 1 ]]; then
         echo "Usage:"
-        echo "  buildroxtonbootloader [evt1|evt2] [copy]"
+        echo "  buildroxtonbootloader [s2] [copy]"
 	return
     fi
+    ### BUILD BL2
     cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
     ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
     ./mk t5d_am301_recovery_v1 --update-bl2 --tc false --build bootloader -ss bronze && \
+    ### SIGN RokuBoot.bin
     cd ~/Work/Roxton/Security/s2_signing/ && \
     rm bl2*; \
     rm r-uboot.bin; \
@@ -372,39 +379,64 @@ function buildroxtonbootloader
     rm zeroiv; \
     rm RokuBoot.bin*; \
     cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/bl2_fw.bin ~/Work/Roxton/Security/s2_signing/ && \
-    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/r-uboot.bin ~/Work/Roxton/Security/s2_signing
-    if [[ $1 = "evt1" ]]; then
+    cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/r-uboot.bin ~/Work/Roxton/Security/s2_signing/ && \
+    if [[ $1 = "s2" ]]; then
+        cd ~/Work/Roxton/Security/s2_signing/ && \
         #### Sign EVT1 
         echo "./create_bootbin.sh keys_aurora_s2/"
-        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.aur ~/Work/Roxton/Security/s2_signing/bl2.hdr
-        ./create_bootbin.sh keys_aurora_s2/
-        #### COPY RokuBoot.bin 
+        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.aur ~/Work/Roxton/Security/s2_signing/bl2.hdr && \
+        ./create_bootbin.sh keys_aurora_s2/ && \
+        cp RokuBoot.bin.signed RokuBoot.bin.signed_for_evt && \
+        #### COPY RokuBoot.binRokuBoot.binigned_for_evt  to t9xx 
         if [[ $2 = "copy" ]]; then
-            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt"
-            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt
+            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts_S2/RokuBoot.bin.signed_for_evt"
+            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/RokuBoot.bin.signed_for_evt
         fi
-    elif [[ $1 = "evt2" ]]; then
+	### Remove files for EVT1
+        [ -e bl2.hdr ] && rm bl2.hdr 
+        [ -e RokuBoot.bin.signed ] && rm RokuBoot.bin.signed
         #### Sign EVT2
         echo "./create_bootbin.sh keys_rox_s2/"
-        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.rox_s2 ~/Work/Roxton/Security/s2_signing/bl2.hdr
-        ./create_bootbin.sh keys_rox_s2/
+        cp $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/prebuilt/bl2.hdr.rox_s2 ~/Work/Roxton/Security/s2_signing/bl2.hdr && \
+        ./create_bootbin.sh keys_rox_s2/ && \
+        cp RokuBoot.bin.signed RokuBoot.bin.signed_for_evt2 && \
         #### COPY RokuBoot.bin 
         if [[ $2 = "copy" ]]; then
-            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt2"
-            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts/RokuBoot.bin.signed_for_evt2
+            echo "Copy RokuBoot.bin.signed to platform/roxton/prebuilts_S2/RokuBoot.bin.signed_for_evt2"
+            cp RokuBoot.bin.signed ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/RokuBoot.bin.signed_for_evt2
         fi
+        [ -e bl2.hdr ] && rm bl2.hdr
+        [ -e RokuBoot.bin.signed ] && rm RokuBoot.bin.signed
     else
         echo "invalid board type $1"
     fi
+    ### BUILD BL31
+    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
+    ./mk t5d_am301_recovery_v1 --update-bl2 --update-bl31 --tc false --build bootloader -ss bronze && \
+    echo "cp fip/_tmp/bl31.bin  bl31_1.3/bin/t5d/bl31.bin"
+    cp fip/_tmp/bl31.bin  bl31_1.3/bin/t5d/bl31.bin && \
+    echo "cp fip/_tmp/bl31.bin  ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/bl31.bin"
+    cp fip/_tmp/bl31.bin  ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/bl31.bin && \
     #### BUILD preuboot.bin & preuboot.bin.sig 
     cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
     ./mk t5d_am301_recovery_v1 --update-bl2 clean && \
     ./mk t5d_am301_recovery_v1 --update-bl2 --tc false --build teeloader -ss bronze && \
-    #### COPY preuboot.bin & preuboot.bin.sig 
+    ### COPY preuboot.bin & preuboot.bin.sig to 's2_signing' directory just for easily collecting RokuBoot and preuboot together 
+    cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/ && \
+    echo "cp preuboot.bin ~/Work/Roxton/Security/s2_signing/"
+    cp preuboot.bin ~/Work/Roxton/Security/s2_signing/ && \
+    echo "cp preuboot.bin.sig ~/Work/Roxton/Security/s2_signing/"
+    cp preuboot.bin.sig ~/Work/Roxton/Security/s2_signing/ && \
+    #### COPY preuboot.bin & preuboot.bin.sig to t9xx port
     if [[ $2 = "copy" ]]; then
-        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/
-        cp preuboot.bin ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin
-        cp preuboot.bin.sig ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin.sig
+        cd $GITLAB_BOOTLOADER/bootloader/uboot-repo/fip/_tmp/ && \
+        #cp preuboot.bin ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin
+        #cp preuboot.bin.sig ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/br/bootloader/uboot-repo/bl2/bin/t5d/preuboot.bin.sig
+        echo "cp preuboot.bin ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/preuboot.bin"
+        cp preuboot.bin ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/preuboot.bin && \
+        echo "cp preuboot.bin.sig ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/preuboot.bin.sig"
+        cp preuboot.bin.sig ~/Gitlab/gitlab.partner/aml-t9xx/t9xx/platform/roxton/prebuilts_S2/preuboot.bin.sig
     fi
 }
 
@@ -416,8 +448,8 @@ function buildroxtonubootdryrun
   ./mk t5d_am301_v1 
 }
 
-# buildroxtonbootloaderforusb evt1/evt2 build
-function buildroxtonbootloaderforusb
+# buildroxtonbootloaderforusbrecovery evt1/evt2 build
+function buildroxtonbootloaderforusbrecovery
 {
     if [ $# -eq 2 ] && [ $2 = "build" ]; then
         cd $GITLAB_BOOTLOADER/bootloader/uboot-repo && \
@@ -455,4 +487,75 @@ function buildroxtonbootloaderforusb
         echo "Invalid arguments"
         echo "Usage: buildroxtonbootloaderforusb evt1|evt2 [build]"
     fi
+}
+
+
+# Build Roxton bl31.bin, bl32.img
+function buildroxtonoptee
+{
+    if [[ $1 = "s2" ]]; then
+        cd ${GITLAB_AMLOGIC_OPTEE} && \
+        ### Patch S2 Key
+        cp ~/Work/Roxton/Security/s2-ta-key/patch_s2_tas_key.patch ./ && \
+        patch -p1 -i patch_s2_tas_key.patch && \
+        rm patch_s2_tas_key.patch && \
+        ### BUILD BL31(ATF) & BL32(OPTEE)
+        cd ${GITLAB_AMLOGIC_OPTEE}/optee_os && \
+        ./make_tee.sh -ss bronze -sr $GITLAB_SECURE_AMLOGIC_OPTEE_T9XX -tr $GITLAB_AMLOGIC_TA_ROXTON -c all
+        ### RESTORE S2 KEY TO DUMMY KEY
+        cd ${GITLAB_AMLOGIC_OPTEE} && \
+        git restore optee_os/ta/arch/arm/link.mk
+    elif [[ $1 = "s4" ]]; then
+        cd ${GITLAB_AMLOGIC_OPTEE}/optee_os && \
+        ./make_tee.sh -ss gold -sr $GITLAB_SECURE_AMLOGIC_OPTEE_T9XX -tr $GITLAB_AMLOGIC_TA_ROXTON -c all
+    fi
+}
+
+function signamlogicta
+{
+    TA_1_DIR=${GITLAB_T9XX}/platform/br/multimedia/libmediadrm/libsecmem-bin/prebuilt/noarch/ta/v3.8
+    TA_1_NAME=2c1a33c0-44cc-11e5-bc3b-0002a5d5c51b.ta
+    TA_2_DIR=${GITLAB_T9XX}/platform/br/multimedia/libmediadrm/cleartvp-bin/prebuilt/noarch/ta/v3.8
+    TA_2_NAME=41fe9859-71e4-4bf4-bbaa-d71435b127ae.ta
+    TA_3_DIR=${GITLAB_T9XX}/platform/br/multimedia/secfirmload/secloadbin/noarch/ta/v3.8
+    TA_3_NAME=526fc4fc-7ee6-4a12-96e3-83da9565bce8.ta
+    TA_4_DIR=${GITLAB_T9XX}/platform/br/vendor/amlogic/provision/ta/v3.8
+    TA_4_NAME=e92a43ab-b4c8-4450-aa12-b1516259613b.ta
+    TA_5_DIR=${GITLAB_T9XX}/platform/br/vendor/amlogic/hdcp/ta/v3
+    TA_5_NAME=ff2a4bea-ef6d-11e6-89cc-d4ae52a7b3b3.ta
+    cd ${GITLAB_AMLOGIC_OPTEE}/optee_os/tdk/ta_export/scripts/ && \
+    ### Copy unsgined Amlogic TAs to the current dir
+    cp ${TA_1_DIR}/${TA_1_NAME} ./ && \
+    cp ${TA_2_DIR}/${TA_2_NAME} ./ && \
+    cp ${TA_3_DIR}/${TA_3_NAME} ./ && \
+    cp ${TA_4_DIR}/${TA_4_NAME} ./ && \
+    cp ${TA_5_DIR}/${TA_5_NAME} ./ && \
+    #### Sign TAs
+    if [[ $1 = "s2" ]]; then
+        cp ~/Work/Roxton/Security/s2-ta-key/sign_tas_s2.sh ./ && \
+        ./sign_tas_s2.sh && \
+        #### Copy Signed TAs
+        cp ./${TA_1_NAME}.signed ${GITLAB_T9XX}/platform/roxton/prebuilts_S2/tas/ && \
+        cp ./${TA_2_NAME}.signed ${GITLAB_T9XX}/platform/roxton/prebuilts_S2/tas/ && \
+        cp ./${TA_3_NAME}.signed ${GITLAB_T9XX}/platform/roxton/prebuilts_S2/tas/ && \
+        cp ./${TA_4_NAME}.signed ${GITLAB_T9XX}/platform/roxton/prebuilts_S2/tas/ && \
+        cp ./${TA_5_NAME}.signed ${GITLAB_T9XX}/platform/roxton/prebuilts_S2/tas/ && \
+        rm ./sign_tas_s2.sh 
+    elif [[ $1 = "s4" ]]; then
+        cp ~/Work/Roxton/Security/s2-ta-key/sign_tas_s4.sh ./ && \
+        ./sign_tas_s4.sh && \
+        #### Copy Signed TAs
+        cp ./${TA_1_NAME}.nosig ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/ && \
+        cp ./${TA_2_NAME}.nosig ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/ && \
+        cp ./${TA_3_NAME}.nosig ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/ && \
+        cp ./${TA_4_NAME}.nosig ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/ && \
+        cp ./${TA_5_NAME}.nosig ${GITLAB_AMLOGIC_OPTEE}/optee_os/prebuilt/ && \
+        rm ./sign_tas_s4.sh
+    else
+        echo "Invalid board type $1"
+    fi
+    #### Remove ta files
+    rm ./*.ta
+    rm ./*.signed
+    rm ./*.nosig
 }
